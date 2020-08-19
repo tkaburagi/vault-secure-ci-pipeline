@@ -22,9 +22,8 @@ jobs:
 
           # pulling vault secret id
           export VAULT_ADDR=${VAULT_END_POINT}
-          vault login s.M8D76JOdWrjd81we2CTnj8Zw
+          vault login ${VAULT_INIT_TOKEN}
           vault status
-
 
   - task: generate-aws-secrets
     config:
