@@ -5,9 +5,6 @@ image_resource:
   source:
     repository: tkaburagi/vault-role-id
     tag: latest
-params:
-  VAULT_END_POINT: ((vault_addr))
-  VAULT_INIT_TOKEN: ((vault_init_token))
 inputs:
   - name: repo
 outputs:
