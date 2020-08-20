@@ -1,4 +1,11 @@
 ---
+resource_types:
+  - name: vault
+    type: docker-image
+    source:
+      repository: nullk/concourse-vault-resource
+      tag: latest
+
 resources:
 - name: repo
   type: git
@@ -10,10 +17,9 @@ resources:
   type: vault
   icon: key-variant
   source:
-    url: ((vault_addr))
-    vault_token: ((vault_init_token))
-    vault_paths:
-      kv/secret-id-concourse: -1
+    host: ((vault_addr))
+    token: ((vault_init_token))
+    secret: /kv/secret-id-concourse
 
 jobs:
 - name: pull-secret-id
