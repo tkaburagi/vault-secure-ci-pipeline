@@ -1,11 +1,4 @@
 ---
-resource_types:
-  - name: vault
-    type: docker-image
-    source:
-      repository: nullk/concourse-vault-resource
-      tag: latest
-
 resources:
 - name: repo
   type: git
@@ -13,13 +6,6 @@ resources:
   source:
     uri: https://github.com/tkaburagi/vault-secure-ci-pipeline.git
     branch: master
-- name: vault-secret-id
-  type: vault
-  icon: key-variant
-  source:
-    host: ((vault_addr))
-    token: ((vault_init_token))
-    secret: /kv/secret-id-concourse
 
 jobs:
 - name: pull-secret-id
@@ -41,7 +27,6 @@ jobs:
   - get: repo
     trigger: true
     passed: [ pull-secret-id ]
-  - get: vault-secret-id
   - task: generate-aws-secrets
     file: repo/ci/generate-aws-secrets.yml
     params:
