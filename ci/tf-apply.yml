@@ -8,26 +8,16 @@ image_resource:
 inputs:
   - name: repo
   - name: out
-outputs:
-  - name: out
 run:
   path: sh
   args:
     - -c
     - |
       terraform -version
-
       # ‼️Retrieve the AWS Secret‼️
       cat out/.aws
       export TF_VAR_access_key=$(cat out/.aws | jq -r '.data.access_key')
       export TF_VAR_secret_key=$(cat out/.aws | jq -r '.data.secret_key')
 
-      # ‼️terraform init‼️
-      terraform init
-
-      # ‼️terraform validate‼️
-      cd repo/tf
-      terraform validate
-
-      # ‼️terraform plan‼️
-      terraform plan
+      # ‼️terraform apply‼️
+      terraform apply -auto-approve
