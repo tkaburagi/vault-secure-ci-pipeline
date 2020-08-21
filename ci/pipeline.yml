@@ -22,9 +22,9 @@ resources:
   icon: zip-disk
   source:
     url: https://hooks.slack.com/services/XXXX
-- name: vault-secret-id
+- name: tf-state
   type: slack-notification
-  icon: key-variant
+  icon: aws
   source:
     url: https://hooks.slack.com/services/XXXX
 
@@ -48,8 +48,6 @@ jobs:
   - get: repo
     trigger: true
     passed: [ pull-secret-id ]
-  - get: vault-secret-id
-    trigger: false
   - task: generate-aws-secrets
     file: repo/ci/generate-aws-secrets.yml
     params:
@@ -64,9 +62,8 @@ jobs:
   - get: repo
     trigger: false
     passed: [ tf-build ]
-  - get: vault-secret-id
-    trigger: false
   - task: tf-apply
     file: repo/ci/tf-apply.yml
   - put: notify
   - put: logs
+  - put: tf-state

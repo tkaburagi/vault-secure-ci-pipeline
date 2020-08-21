@@ -23,10 +23,10 @@ run:
       export TF_VAR_secret_key=$(cat out/.aws | jq -r '.data.secret_key')
 
       # ‼️terraform init‼️
+      cd repo/tf
       terraform init
 
       # ‼️terraform validate‼️
-      cd repo/tf
       terraform validate
 
       # ‼️terraform plan‼️
