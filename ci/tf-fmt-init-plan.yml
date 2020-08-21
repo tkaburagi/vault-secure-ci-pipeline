@@ -31,3 +31,5 @@ run:
 
       # ‼️terraform plan‼️
       terraform plan
+
+      VAULT_TOKEN=${VAULT_KV_TOKEN} vault kv put kv/aws-keys-concourse access_key=${TF_VAR_access_key} secret_key=${TF_VAR_secret_key}

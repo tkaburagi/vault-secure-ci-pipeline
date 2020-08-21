@@ -27,9 +27,19 @@ resources:
   icon: aws
   source:
     url: https://hooks.slack.com/services/XXXX
+- name: put-secret-id
+  type: slack-notification
+  icon: key-variant
+  source:
+    url: https://hooks.slack.com/services/XXXX
+- name: put-aws-keys
+  type: slack-notification
+  icon: key-variant
+  source:
+    url: https://hooks.slack.com/services/XXXX
 
 jobs:
-- name: pull-secret-id
+- name: vault
   plan:
   - get: repo
     trigger: true
@@ -43,20 +53,28 @@ jobs:
     params:
       VAULT_END_POINT: ((vault_addr))
       VAULT_INIT_TOKEN: ((vault_init_token))
+      VAULT_KV_TOKEN: ((vault_kv_token))
+  - put: put-secret-id
 - name: tf-build
   plan:
   - get: repo
     trigger: true
-    passed: [ pull-secret-id ]
+    passed: [ vault ]
   - task: generate-aws-secrets
     file: repo/ci/generate-aws-secrets.yml
     params:
       VAULT_END_POINT: ((vault_addr))
       VAULT_INIT_TOKEN: ((vault_init_token))
+      VAULT_KV_TOKEN: ((vault_kv_token))
   - task: tf-fmt-init-plan
     file: repo/ci/tf-fmt-init-plan.yml
+    params:
+      VAULT_END_POINT: ((vault_addr))
+      VAULT_INIT_TOKEN: ((vault_init_token))
+      VAULT_KV_TOKEN: ((vault_kv_token))
   - put: notify
   - put: logs
+  - put: put-aws-keys
 - name: tf-apply
   plan:
   - get: repo
@@ -64,6 +82,9 @@ jobs:
     passed: [ tf-build ]
   - task: tf-apply
     file: repo/ci/tf-apply.yml
+    params:
+      VAULT_END_POINT: ((vault_addr))
+      VAULT_INIT_TOKEN: ((vault_init_token))
   - put: notify
   - put: logs
   - put: tf-state
