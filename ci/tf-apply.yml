@@ -20,4 +20,5 @@ run:
 
       # ‼️terraform apply‼️
       cd repo/tf
+      terraform init
       terraform apply -auto-approve
