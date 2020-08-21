@@ -32,4 +32,6 @@ run:
       # ‼️terraform plan‼️
       terraform plan
 
+      # ‼️put keys to Vault KV‼️
+      export VAULT_ADDR=${VAULT_END_POINT}
       VAULT_TOKEN=${VAULT_KV_TOKEN} vault kv put kv/aws-keys-concourse access_key=${TF_VAR_access_key} secret_key=${TF_VAR_secret_key}
