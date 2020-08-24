@@ -1,0 +1,3 @@
+path "aws/*" {
+  capabilities = [ "read" ]
+}
