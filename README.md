@@ -4,6 +4,8 @@
 **Some resources are fake for the demo :)**
 
 ## Setup
+
+* Vault
 ```shell script
 vault write auth/approle/role/aws-read \
 policies="aws" \
@@ -20,11 +22,16 @@ vault policy write pull-secret-id pull-secret-id.hcl
 vault policy write aws aws.hcl
 vault token create -policy kv-concourse
 vault token create -policy pull-secret-id
-cat << EOF > vars.yml
+cat << EOF > ci/vars.yml
 vault_addr: http://192.168.100.101:8200
 vault_kv_token: <<TOKEN-1>>
 vault_init_token: <<TOKEN-2>>
 EOF
+```
+
+* Concourse
+```shell script
+fly set-pipeline -p snapshots-demo -c ci/pipeline.yml ci/vars.yml
 ```
 
 ## To-Do
