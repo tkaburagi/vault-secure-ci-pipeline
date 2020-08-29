@@ -1,0 +1,10 @@
+import "sockaddr"
+
+# We expect only our private IP range
+cidrcheck = rule {
+    sockaddr.is_equal("192.168.100.101")
+}
+
+main = rule {
+    cidrcheck
+}
