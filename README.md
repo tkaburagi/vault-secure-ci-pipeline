@@ -48,11 +48,17 @@ vault read sys/policies/egp/validate-cidr-ci-demo
 
 * Concourse
 ```shell script
+docker build -t <<IMAGE_NAME>> .
 cat << EOF > ci/vars.yml
 vault_addr: http://192.168.100.101:8200
 vault_kv_token: <<TOKEN-1>>
 vault_init_token: <<TOKEN-2>>
 EOF
+```
+
+Replace `tkaburagi/vault-role-id` to your image name for each file. Then create the pipeline!
+
+```shell script
 fly set-pipeline -p snapshots-demo -c ci/pipeline.yml ci/vars.yml
 ```
 
@@ -60,5 +66,6 @@ fly set-pipeline -p snapshots-demo -c ci/pipeline.yml ci/vars.yml
 * ~~use_limit & TTL for each secret~~
 * ~~ACL & Sentinel for KV~~
 * ~~Dockerfile~~
-* Replace Role-id for the Docker image
+* ~~Replace Role-id for the Docker image~~
+* Revoke the key
 
