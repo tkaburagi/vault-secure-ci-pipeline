@@ -18,5 +18,7 @@ run:
       export VAULT_ADDR=${VAULT_END_POINT}
       export LEASE_ID=$(VAULT_TOKEN=${VAULT_KV_TOKEN} vault kv get -format=json kv/aws-keys-concourse | jq -r '.data.data.lease_id')
 
+      echo "👇LEASE ID👇"
+      echo ${LEASE_ID}
       # ‼️Revoke the AWS Key‼️
        VAULT_TOKEN=${VAULT_REVOKE_TOKEN} vault lease revoke ${LEASE_ID}
