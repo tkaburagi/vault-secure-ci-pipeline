@@ -19,5 +19,5 @@ run:
 
       # ‼️Validate Token‼️
       VAULT_TOKEN=${VAULT_INIT_TOKEN} vault token lookup
-      VAULT_TOKEN=${VAULT_INIT_TOKEN} vault token lookup　${VAULT_REVOKE_TOKEN}
-      VAULT_TOKEN=${VAULT_INIT_TOKEN} vault token lookup　${VAULT_KV_TOKEN}
+      VAULT_TOKEN=${VAULT_REVOKE_TOKEN} vault token lookup
+      VAULT_TOKEN=${VAULT_KV_TOKEN} vault token lookup
