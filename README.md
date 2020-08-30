@@ -13,6 +13,25 @@ vault write aws/config/root \
     secret_key=*** \
     region=ap-northeast-1
 vault write aws/config/lease lease=10m lease_max=10m
+vault write aws/roles/tf-handson-role \  
+    credential_type=iam_user \
+    policy_document=-<<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "rds:*",
+                "ec2:*",
+                "elasticloadbalancing:*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
 ```
 
 * Vault AppRole Setting
@@ -33,8 +52,10 @@ vault read -format=json /auth/approle/role/aws-read/role-id | jq -r '.data.role_
 vault policy write kv-concourse kv-concourse.hcl
 vault policy write pull-secret-id pull-secret-id.hcl
 vault policy write aws aws.hcl
+vault policy write revoke-aws revoke-aws.hcl
 vault token create -policy kv-concourse
 vault token create -policy pull-secret-id
+vault token create -policy revoke-aws
 ```
 
 * Vault EGP Setting (Enterprise Only)
@@ -53,6 +74,7 @@ cat << EOF > ci/vars.yml
 vault_addr: http://192.168.100.101:8200
 vault_kv_token: <<TOKEN-1>>
 vault_init_token: <<TOKEN-2>>
+vault_revoke_token: <<TOKEN-3>>
 EOF
 ```
 

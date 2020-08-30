@@ -85,6 +85,12 @@ jobs:
     params:
       VAULT_END_POINT: ((vault_addr))
       VAULT_INIT_TOKEN: ((vault_init_token))
+      VAULT_KV_TOKEN: ((vault_kv_token))
+  - task: revoke-aws-key
+    file: repo/ci/revoke-aws-key.yml
+    params:
+      VAULT_END_POINT: ((vault_addr))
+      VAULT_REVOKE_TOKEN: ((vault_revoke_token))
   - put: notify
   - put: logs
   - put: tf-state
