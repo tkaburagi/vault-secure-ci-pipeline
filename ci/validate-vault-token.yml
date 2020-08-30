@@ -18,6 +18,9 @@ run:
       export VAULT_ADDR=${VAULT_END_POINT}
 
       # ‼️Validate Token‼️
+      echo "👇Token for pulling the Secret ID👇"
       VAULT_TOKEN=${VAULT_INIT_TOKEN} vault token lookup
+      echo "👇Token for revoking👇"
       VAULT_TOKEN=${VAULT_REVOKE_TOKEN} vault token lookup
+      echo "👇Token for KV Secret Engine👇"
       VAULT_TOKEN=${VAULT_KV_TOKEN} vault token lookup
