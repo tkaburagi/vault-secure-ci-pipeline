@@ -1,0 +1,22 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: tkaburagi/vault-role-id
+    tag: latest
+inputs:
+  - name: repo
+outputs:
+  - name: out
+run:
+  path: sh
+  args:
+    - -c
+    - |
+      vault -version
+      export VAULT_ADDR=${VAULT_END_POINT}
+      export LEASE_ID=$(VAULT_TOKEN=${VAULT_KV_TOKEN} vault kv get -format=json kv/aws-keys-concourse | jq -r '.lease_id')
+
+      # ‼️Revoke the AWS Key‼️
+       VAULT_TOKEN=${VAULT_REVOKE_TOKEN} vault lease revoke ${LEASE_ID}
