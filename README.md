@@ -81,7 +81,9 @@ $ cat << EOF > ci/vars.yml
 Next is ...
 
 1. Replacing `tkaburagi/vault-role-id` to your image name for each file.
-2. Replacing `tkaburagi:tkaburagi` to your `username:password` in `docker-compose.yml`
+2. Replacing `tkaburagi:tkaburagi` to your `username:password` in `docker-compose.yml`.
+3. Replacing `CONCOURSE_WORK_DIR` and `CONCOURSE_EXTERNAL_URL` to your local environemts in `docker-compose.yml`.
+4. Replacing `VTOKEN` and `VADDR` to your environments in `Dockerfile`.
 
 Then create the pipeline!
 
@@ -99,5 +101,5 @@ $ fly set-pipeline -p snapshots-demo -c ci/pipeline.yml ci/vars.yml
 * ~~Replace Role-id for the Docker image~~
 * ~~Revoke the key~~
 * ~~E2E test~~
-* Webhook
+* ~~Webhook~~
 
