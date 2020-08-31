@@ -40,10 +40,10 @@ vault auth enable approle
 vault write auth/approle/role/aws-read \
     policies="aws" \
     secret_id_num_uses=1 \
-    secret_id_ttl="10" \
-    token_num_uses=1 \
-    token_ttl="10" \
-    token_max_ttl="30"
+    secret_id_ttl="600" \
+    token_num_uses=3 \
+    token_ttl="600" \
+    token_max_ttl="1200"
 vault read -format=json /auth/approle/role/aws-read/role-id | jq -r '.data.role_id'
 ```
 
@@ -53,9 +53,9 @@ vault policy write kv-concourse kv-concourse.hcl
 vault policy write pull-secret-id pull-secret-id.hcl
 vault policy write aws aws.hcl
 vault policy write revoke-aws revoke-aws.hcl
-vault token create -policy kv-concourse
-vault token create -policy pull-secret-id
-vault token create -policy revoke-aws
+vault token create -policy kv-concourse -no-default-policy
+vault token create -policy pull-secret-id -no-default-policy
+vault token create -policy revoke-aws -no-default-policy
 ```
 
 * Vault EGP Setting (Enterprise Only)
@@ -67,7 +67,7 @@ vault write sys/policies/egp/validate-cidr-ci-demo \
 vault read sys/policies/egp/validate-cidr-ci-demo
 ```
 
-* Concourse
+* Concourse Setting
 ```shell script
 docker build -t <<IMAGE_NAME>> .
 cat << EOF > ci/vars.yml
@@ -78,9 +78,17 @@ vault_revoke_token: <<TOKEN-3>>
 EOF
 ```
 
-Replace `tkaburagi/vault-role-id` to your image name for each file. Then create the pipeline!
+Next is ...
 
+1. Replacing `tkaburagi/vault-role-id` to your image name for each file.
+2. Replacing `tkaburagi:tkaburagi` to your `username:password` in `docker-compose.yml`
+
+Then create the pipeline!
+
+* Start Concourse
 ```shell script
+docker-compose up
+fly -t localhost login -c http:127.0.0.1
 fly set-pipeline -p snapshots-demo -c ci/pipeline.yml ci/vars.yml
 ```
 
@@ -89,5 +97,7 @@ fly set-pipeline -p snapshots-demo -c ci/pipeline.yml ci/vars.yml
 * ~~ACL & Sentinel for KV~~
 * ~~Dockerfile~~
 * ~~Replace Role-id for the Docker image~~
-* Revoke the key
+* ~~Revoke the key~~
+* ~~E2E test~~
+* Webhook
 
