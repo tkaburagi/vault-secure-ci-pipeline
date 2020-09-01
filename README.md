@@ -91,7 +91,8 @@ Then create the pipeline!
 ```shell script
 $ docker-compose up
 $ fly -t localhost login -c http:127.0.0.1
-$ fly set-pipeline -p snapshots-demo -c ci/pipeline.yml ci/vars.yml
+$ fly -t localhost set-pipeline -p snapshots-demo -c ci/pipeline.yml ci/vars.yml
+$ fly -t localhost unpause-pipeline --pipeline snapshots-demo
 ```
 
 ## To-Do
@@ -103,3 +104,6 @@ $ fly set-pipeline -p snapshots-demo -c ci/pipeline.yml ci/vars.yml
 * ~~E2E test~~
 * ~~Webhook~~
 
+## Slide & Demo
+* [Slide](https://docs.google.com/presentation/d/1oWaj9dpbG3zbwmtW-_DMvyZuR2flju-DtrNNG775jYA/edit?usp=sharing)
+* [Demo]()
