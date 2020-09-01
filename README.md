@@ -84,13 +84,14 @@ Next is ...
 2. Replacing `tkaburagi:tkaburagi` to your `username:password` in `docker-compose.yml`.
 3. Replacing `CONCOURSE_WORK_DIR` and `CONCOURSE_EXTERNAL_URL` to your local environemts in `docker-compose.yml`.
 4. Replacing `VTOKEN` and `VADDR` to your environments in `Dockerfile`.
+5. Replcaing `https://github.com/tkaburagi/vault-secure-ci-pipeline.git` to your cloned repo in `pipeline.yml`.
 
 Then create the pipeline!
 
 * Start Concourse
 ```shell script
 $ docker-compose up
-$ fly -t localhost login -c http:127.0.0.1
+$ fly -t localhost login -c http://127.0.0.1
 $ fly -t localhost set-pipeline -p snapshots-demo -c ci/pipeline.yml ci/vars.yml
 $ fly -t localhost unpause-pipeline --pipeline snapshots-demo
 ```
