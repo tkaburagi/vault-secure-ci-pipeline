@@ -61,9 +61,9 @@ $ vault token create -policy revoke-aws -no-default-policy
 * Vault EGP Setting (Enterprise Only)
 ```shell script
 $ vault write sys/policies/egp/validate-cidr-ci-demo \
-  policy=$(base64 validate-cidr.sentinel) \
-  enforcement_level="hard-mandatory" \
-  paths='["kv/aws-keys-concourse", "kv/secret-id-concourse", "auth/approle/role/aws-read/secret-id"]'
+    policy=$(base64 validate-cidr.sentinel) \
+    enforcement_level="hard-mandatory" \
+    paths='sys/internal/ui/mounts/kv/aws-keys-concourse','sys/internal/ui/mounts/kv/secret-id-concourse', 'auth/approle/role/aws-read/secret-id'
 $ vault read sys/policies/egp/validate-cidr-ci-demo
 ```
 

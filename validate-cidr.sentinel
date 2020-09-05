@@ -2,7 +2,7 @@ import "sockaddr"
 
 # We expect only our private IP range
 cidrcheck = rule {
-    sockaddr.is_equal("192.168.100.101")
+    sockaddr.is_equal(request.connection.remote_addr, "192.168.100.101")
 }
 
 main = rule {
