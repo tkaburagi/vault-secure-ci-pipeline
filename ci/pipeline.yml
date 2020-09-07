@@ -9,6 +9,7 @@ resources:
 - name: repo
   type: git
   icon: github
+  check_every: 10s
   source:
     uri: https://github.com/tkaburagi/vault-secure-ci-pipeline.git
     branch: master
