@@ -81,7 +81,7 @@ jobs:
 - name: tf-apply
   plan:
   - get: repo
-    trigger: false
+    trigger: true
     passed: [ tf-build ]
   - task: tf-apply
     file: repo/ci/tf-apply.yml

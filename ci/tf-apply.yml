@@ -13,11 +13,12 @@ run:
     - -c
     - |
       terraform -version
+      export VAULT_ADDR=${VAULT_END_POINT}
+
       # ‼️Retrieve the AWS Secret‼️
       echo "👇LEASE ID👇"
       VAULT_TOKEN=${VAULT_KV_TOKEN} vault kv get -format=json kv/aws-keys-concourse
 
-      export VAULT_ADDR=${VAULT_END_POINT}
       export TF_VAR_access_key=$(VAULT_TOKEN=${VAULT_KV_TOKEN} vault kv get -format=json kv/aws-keys-concourse | jq -r '.data.data.access_key')
       export TF_VAR_secret_key=$(VAULT_TOKEN=${VAULT_KV_TOKEN} vault kv get -format=json kv/aws-keys-concourse | jq -r '.data.data.secret_key')
 
