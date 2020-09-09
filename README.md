@@ -5,6 +5,14 @@
 
 ## Setup
 
+Next is ...
+
+1. Replacing `tkaburagi/vault-role-id` to your image name for each file.
+2. Replacing `tkaburagi:tkaburagi` to your `username:password` in `docker-compose.yml`.
+3. Replacing `CONCOURSE_WORK_DIR` and `CONCOURSE_EXTERNAL_URL` to your local environemts in `docker-compose.yml`.
+4. Replacing `VTOKEN` and `VADDR` to your environments in `Dockerfile`.
+5. Replcaing `https://github.com/tkaburagi/vault-secure-ci-pipeline.git` to your cloned repo in `pipeline.yml`.
+
 * Vault AWS Setting
 ```shell script
 $ vault secrets enable aws
@@ -77,14 +85,6 @@ $ cat << EOF > ci/vars.yml
     vault_revoke_token: <<TOKEN-3>>
     EOF
 ```
-
-Next is ...
-
-1. Replacing `tkaburagi/vault-role-id` to your image name for each file.
-2. Replacing `tkaburagi:tkaburagi` to your `username:password` in `docker-compose.yml`.
-3. Replacing `CONCOURSE_WORK_DIR` and `CONCOURSE_EXTERNAL_URL` to your local environemts in `docker-compose.yml`.
-4. Replacing `VTOKEN` and `VADDR` to your environments in `Dockerfile`.
-5. Replcaing `https://github.com/tkaburagi/vault-secure-ci-pipeline.git` to your cloned repo in `pipeline.yml`.
 
 Then create the pipeline!
 
