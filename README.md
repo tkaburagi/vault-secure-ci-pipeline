@@ -5,13 +5,10 @@
 
 ## Setup
 
-Next is ...
-
 1. Replacing `tkaburagi/vault-role-id` to your image name for each file.
 2. Replacing `tkaburagi:tkaburagi` to your `username:password` in `docker-compose.yml`.
 3. Replacing `CONCOURSE_WORK_DIR` and `CONCOURSE_EXTERNAL_URL` to your local environemts in `docker-compose.yml`.
-4. Replacing `VTOKEN` and `VADDR` to your environments in `Dockerfile`.
-5. Replcaing `https://github.com/tkaburagi/vault-secure-ci-pipeline.git` to your cloned repo in `pipeline.yml`.
+4. Replcaing `https://github.com/tkaburagi/vault-secure-ci-pipeline.git` to your cloned repo in `pipeline.yml`.
 
 * Vault AWS Setting
 ```shell script
@@ -57,14 +54,18 @@ $ vault read -format=json /auth/approle/role/aws-read/role-id | jq -r '.data.rol
 
 * Vault ACL Setting
 ```shell script
+$ vault policy write read-role-id read-role-id.hcl
 $ vault policy write kv-concourse kv-concourse.hcl
 $ vault policy write pull-secret-id pull-secret-id.hcl
 $ vault policy write aws aws.hcl
 $ vault policy write revoke-aws revoke-aws.hcl
+$ vault token create -policy read-role-id -no-default-policy
 $ vault token create -policy kv-concourse -no-default-policy
 $ vault token create -policy pull-secret-id -no-default-policy
 $ vault token create -policy revoke-aws -no-default-policy
 ```
+
+* Replacing `VTOKEN` and `VADDR` to your environments in `Dockerfile`.
 
 * Vault EGP Setting (Enterprise Only)
 ```shell script
