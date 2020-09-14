@@ -1,6 +1,7 @@
 FROM vault:latest
-ENV VAULT_TOKEN=s.zTBJe2IgA033w7tPVmQVOYgz
-ENV VAULT_ADDR=http://192.168.100.101:8200
+## token for reading role id
+ENV VTOKEN=s.YdlK3BMWnjv0xpiesWKzHISL
+ENV VADDR=http://192.168.100.101:8200
 RUN apk update
 RUN apk add curl
 RUN apk add jq
