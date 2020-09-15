@@ -7,7 +7,7 @@ variable "ami" {
     default = "ami-06d9ad3f86032262d"
 }
 variable "hello_tf_instance_count" {
-    default = 0
+    default = 1
 }
 variable "hello_tf_instance_type" {
     default = "t2.micro"
