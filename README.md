@@ -108,4 +108,4 @@ $ fly -t localhost unpause-pipeline --pipeline snapshots-demo
 
 ## Slide & Demo
 * [Slide](https://docs.google.com/presentation/d/1oWaj9dpbG3zbwmtW-_DMvyZuR2flju-DtrNNG775jYA/edit?usp=sharing)
-* [Demo]()
+* [Demo Video](https://www.youtube.com/watch?v=02fbiq7cfO8&list=PL81sUbsFNc5bi7mvrZ4GgSl5Iq8WTlPgx)
