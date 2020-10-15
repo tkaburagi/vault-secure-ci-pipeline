@@ -79,6 +79,7 @@ $ vault read sys/policies/egp/validate-cidr-ci-demo
 * Concourse Setting
 ```shell script
 $ docker build -t <<IMAGE_NAME>> .
+$ docker push <<IMAGE_NAME>>
 $ cat << EOF > ci/vars.yml
     vault_addr: http://192.168.100.101:8200
     vault_kv_token: <<TOKEN-1>>
