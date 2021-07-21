@@ -84,12 +84,17 @@ $ vault read sys/policies/egp/validate-cidr-ci-demo
 ### Build worker container
 
 ```shell script
+<<<<<<< HEAD
 $ export VAULT_ADDR=http://(YOUR_IP):(YOUR_PORT)
 $ export DOCKERIMG=(YOUR_IMAGE_NAME) #eg.-> davidw/vault-role-id
 $ export TOKEN_1=(TOKEN-FOR-kv-concourse)
 $ export TOKEN_2=(TOKEN-FOR-pull-secret-id)
 $ export TOKEN_3=(TOKEN-FOR-revoke-aws)
 $ docker build -t ${DOCKERIMG} .
+=======
+$ docker build -t <<IMAGE_NAME>> .
+$ docker push <<IMAGE_NAME>>
+>>>>>>> e5401c75cb0849c0b3aa28fcc837fc042344858e
 $ cat << EOF > ci/vars.yml
     vault_addr: http://192.168.100.101:8200
     vault_kv_token: ${TOKEN_1}

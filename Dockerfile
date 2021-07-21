@@ -1,7 +1,7 @@
 FROM vault:latest
 ## token for reading role id
-ENV VTOKEN=s.YdlK3BMWnjv0xpiesWKzHISL
-ENV VADDR=http://192.168.100.101:8200
+ENV VTOKEN=((REPLACE))
+ENV VADDR=((REPLACE))
 RUN apk update
 RUN apk add curl
 RUN apk add jq
