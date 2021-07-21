@@ -5,10 +5,10 @@
 
 ## Setup
 
-1. Replacing `tkaburagi/vault-role-id` to your image name for each file.
-2. Replacing `tkaburagi:tkaburagi` to your `username:password` in `docker-compose.yml`.
-3. Replacing `CONCOURSE_WORK_DIR` and `CONCOURSE_EXTERNAL_URL` to your local environemts in `docker-compose.yml`.
-4. Replcaing `https://github.com/tkaburagi/vault-secure-ci-pipeline.git` to your cloned repo in `pipeline.yml`.
+```
+git clone https://github.com/tkaburagi/vault-secure-ci-pipeline
+cd  vault-secure-ci-pipeline
+```
 
 * Vault AWS Setting
 ```shell script
@@ -67,6 +67,11 @@ $ vault token create -policy revoke-aws -no-default-policy
 
 * Replacing `VTOKEN` and `VADDR` to your environments in `Dockerfile`.
 
+```dockerfile
+ENV VTOKEN=((REPLACE))
+ENV VADDR=((REPLACE))
+```
+
 * Vault EGP Setting (Enterprise Only)
 ```shell script
 $ vault write sys/policies/egp/validate-cidr-ci-demo \
@@ -76,17 +81,41 @@ $ vault write sys/policies/egp/validate-cidr-ci-demo \
 $ vault read sys/policies/egp/validate-cidr-ci-demo
 ```
 
-* Concourse Setting
+### Build worker container
+
 ```shell script
-$ docker build -t <<IMAGE_NAME>> .
+$ export VAULT_ADDR=http://(YOUR_IP):(YOUR_PORT)
+$ export DOCKERIMG=(YOUR_IMAGE_NAME) #eg.-> davidw/vault-role-id
+$ export TOKEN_1=(TOKEN-FOR-kv-concourse)
+$ export TOKEN_2=(TOKEN-FOR-pull-secret-id)
+$ export TOKEN_3=(TOKEN-FOR-revoke-aws)
+$ docker build -t ${DOCKERIMG} .
 $ cat << EOF > ci/vars.yml
     vault_addr: http://192.168.100.101:8200
-    vault_kv_token: <<TOKEN-1>>
-    vault_init_token: <<TOKEN-2>>
-    vault_revoke_token: <<TOKEN-3>>
+    vault_kv_token: ${TOKEN_1}
+    vault_init_token: ${TOKEN_2}  #only a right for pulling secret-id
+    vault_revoke_token: ${TOKEN_3}
     EOF
 ```
 
+## Setting Vaules
+
+1. Replacing `tkaburagi/vault-role-id` to your image name for each file under `ci` dir.
+    * generate-aws-secrets.yml
+    * revoke-aws-key.yml
+    * pull-secret-id.yml
+    * tf-fmt-init-plan.yml
+    * validate-vault-token.yml
+    * tf-apply.yml
+2. Replacing `tkaburagi:tkaburagi` to your `username:password` in `docker-compose.yml`.
+    * `username:password` could be any values you like. This is for logging into Concourse
+3. Replacing `CONCOURSE_WORK_DIR` and `CONCOURSE_EXTERNAL_URL` to your local environemts in `docker-compose.yml`.
+    * `CONCOURSE_EXTERNAL_URL` could be your localhost URL like `http://127.0.0.1` 
+    * `CONCOURSE_WORK_DIR`could be an arbitrary your dir.
+4. Replcaing `https://github.com/tkaburagi/vault-secure-ci-pipeline.git` to your cloned and published repo in `pipeline.yml`.
+    * should be executed after publishing.
+
+* Concourse Setting
 Then create the pipeline!
 
 * Start Concourse
