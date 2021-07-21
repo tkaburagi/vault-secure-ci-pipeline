@@ -68,7 +68,7 @@ $ vault token create -policy revoke-aws -no-default-policy
 **Note each token**
 
 * Replacing `VTOKEN` and `VADDR` to your environments in `Dockerfile`.
-    * `VTOKEN`: Token for `ead-role-id `
+    * `VTOKEN`: Token for `read-role-id `
 
 ```dockerfile
 ENV VTOKEN=((REPLACE))
