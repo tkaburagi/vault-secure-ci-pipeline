@@ -90,6 +90,7 @@ $ export TOKEN_1=(TOKEN-FOR-kv-concourse)
 $ export TOKEN_2=(TOKEN-FOR-pull-secret-id)
 $ export TOKEN_3=(TOKEN-FOR-revoke-aws)
 $ docker build -t ${DOCKERIMG} .
+$ docker push ${DOCKERIMG}
 $ cat << EOF > ci/vars.yml
     vault_addr: http://192.168.100.101:8200
     vault_kv_token: ${TOKEN_1}
