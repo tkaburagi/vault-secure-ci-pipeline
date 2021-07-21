@@ -65,6 +65,8 @@ $ vault token create -policy pull-secret-id -no-default-policy
 $ vault token create -policy revoke-aws -no-default-policy
 ```
 
+**Note each token**
+
 * Replacing `VTOKEN` and `VADDR` to your environments in `Dockerfile`.
 
 ```dockerfile
