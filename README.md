@@ -92,7 +92,7 @@ $ export TOKEN_3=(TOKEN-FOR-revoke-aws)
 $ docker build -t ${DOCKERIMG} .
 $ docker push ${DOCKERIMG}
 $ cat << EOF > ci/vars.yml
-    vault_addr: http://192.168.100.101:8200
+    vault_addr: ${VAULT_ADDR}
     vault_kv_token: ${TOKEN_1}
     vault_init_token: ${TOKEN_2}  #only a right for pulling secret-id
     vault_revoke_token: ${TOKEN_3}
